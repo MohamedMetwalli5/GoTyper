@@ -1,1 +1,1 @@
-# TypeRacer
+# Go-Typer
