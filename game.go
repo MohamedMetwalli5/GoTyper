@@ -60,7 +60,7 @@ func readFile(fileName string) string {
 func MetricsCalculation(charInput string, text string, averageWordLength int, elapsed float32) {
 	correct := 0
 
-	fmt.Printf("\033[32m%s\033[0m\n", text)
+	fmt.Printf("\033[32m%s\033[0m\n\n", text)
 	for i := 0; i < len(charInput); i++ {
 		if charInput[i] == text[i] {
 			fmt.Printf("\033[32m%c\033[0m", charInput[i])
@@ -69,7 +69,7 @@ func MetricsCalculation(charInput string, text string, averageWordLength int, el
 			fmt.Printf("\033[31m%c\033[0m", charInput[i])
 		}
 	}
-	fmt.Println()
+	fmt.Println("\n-------------------------------------------------------------------------------------------")
 
 	wpm := int((float32(len(text)) / float32(averageWordLength)) / float32(elapsed))
 	fmt.Printf("\033[33mWPM: %d\033[0m\n", wpm)
