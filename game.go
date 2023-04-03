@@ -76,7 +76,7 @@ func MetricsCalculation(charInput string, text string, averageWordLength int, el
 	acc := int((float32(correct) / float32(len(charInput))) * 100)
 	fmt.Printf("\033[33mACC: %d\033[0m\n", acc)
 
-	raw := len(charInput)
+	raw := int(float32(len(charInput)) / float32(elapsed*60))
 	fmt.Printf("\033[33mRaw: %d\033[0m\n", raw)
 
 }
