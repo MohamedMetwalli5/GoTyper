@@ -4,7 +4,7 @@
 # GoTyper
 ## Metrics Calculations
 ### WPM
-*WPM (Words Per Minute): It is used to measure how many words a typist can accurately type within a minute. The calculation is based on the total number of characters typed divided by 5 (since an average word is considered to be 5 characters long like in the dataset i used) and then divided by the time taken in minutes.
+* WPM (Words Per Minute): It is used to measure how many words a typist can accurately type within a minute. The calculation is based on the total number of characters typed divided by 5 (since an average word is considered to be 5 characters long like in the dataset i used) and then divided by the time taken in minutes.
 
 * Formula: `WPM = (Total characters typed / 5) / Time taken in minutes`
 
