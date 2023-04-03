@@ -94,6 +94,23 @@ func clear() {
 func main() {
 	clear()
 	println()
+
+	// "GoTyper"
+	fmt.Println("    ▄████  ▒█████  ▄▄▄█████▓▓██   ██▓ ██▓███  ▓█████  ██▀███  ")
+	fmt.Println("   ██▒ ▀█▒▒██▒  ██▒▓  ██▒ ▓▒ ▒██  ██▒▓██░  ██▒▓█   ▀ ▓██ ▒ ██▒")
+	fmt.Println("  ▒██░▄▄▄░▒██░  ██▒▒ ▓██░ ▒░  ▒██ ██░▓██░ ██▓▒▒███   ▓██ ░▄█ ▒")
+	fmt.Println("  ░▓█  ██▓▒██   ██░░ ▓██▓ ░   ░ ▐██▓░▒██▄█▓▒ ▒▒▓█  ▄ ▒██▀▀█▄  ")
+	fmt.Println("  ░▒▓███▀▒░ ████▓▒░  ▒██▒ ░   ░ ██▒▓░▒██▒ ░  ░░▒████▒░██▓ ▒██▒")
+	fmt.Println("   ░▒   ▒ ░ ▒░▒░▒░   ▒ ░░      ██▒▒▒ ▒▓▒░ ░  ░░░ ▒░ ░░ ▒▓ ░▒▓░")
+	fmt.Println("    ░   ░   ░ ▒ ▒░     ░     ▓██ ░▒░ ░▒ ░      ░ ░  ░  ░▒ ░ ▒░")
+	fmt.Println("  ░ ░   ░ ░ ░ ░ ▒    ░       ▒ ▒ ░░  ░░          ░     ░░   ░ ")
+	fmt.Println("        ░     ░ ░            ░ ░                 ░  ░   ░     ")
+	fmt.Println("                             ░ ░                              ")
+
+	time.Sleep(2 * time.Second)
+	clear()
+	println()
+
 	text := readFile("Words.txt") // text to have the test on
 	fmt.Print(text)
 	fmt.Println("\033[0;5H")
