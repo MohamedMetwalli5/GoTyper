@@ -1,4 +1,5 @@
 ![Language](https://img.shields.io/badge/language-Go%20-cyan.svg)
+![License](https://img.shields.io/badge/license-Apache_2.0-orange.svg)
 
 # Go-Typer
 ## Metrics Calculations
