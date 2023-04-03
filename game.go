@@ -71,6 +71,9 @@ func MetricsCalculation(charInput string, text string, averageWordLength int, el
 	}
 	fmt.Println("\n-------------------------------------------------------------------------------------------")
 
+	fmt.Println("\033[32m▀ Right\033[0m")
+	fmt.Println("\033[31m▀ Wrong\033[0m")
+
 	wpm := int((float32(len(text)) / float32(averageWordLength)) / float32(elapsed))
 	fmt.Printf("\033[33mWPM: %d\033[0m\n", wpm)
 
