@@ -11,6 +11,7 @@ import (
 )
 
 const averageWordLength = 5
+const theSpaceSelimiter = "."
 
 func randomNumberGenerator() int {
 	rand.Seed(time.Now().UnixNano())
@@ -25,7 +26,7 @@ func getRandomElements(dictionary []string, textLength int) string {
 		index := rand.Intn(len(dictionary)) // generate a random index within the range of the dictionary array
 		if !selected[index] {               // check if the index has already been selected
 			selected[index] = true // if not selected, mark it as selected and print the corresponding element
-			finalText += dictionary[index] + " "
+			finalText += dictionary[index] + theSpaceSelimiter
 		}
 	}
 	finalText = strings.TrimRight(finalText, " ")
@@ -88,6 +89,8 @@ func clear() {
 }
 
 func main() {
+	clear()
+	println()
 	text := readFile("Words.txt") // text to have the test on
 	fmt.Print(text)
 	fmt.Println("\033[0;5H") // Set cursor position to row 0, column 5 (6th character)
