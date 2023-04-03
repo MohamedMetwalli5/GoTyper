@@ -955,8 +955,8 @@ weight
 well
 west
 western
-what
 whatever
+what
 when
 where
 whether
