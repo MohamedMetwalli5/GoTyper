@@ -56,15 +56,29 @@ func readFile(fileName string) string {
 	return finalText
 }
 
-func MetricsCalculation(text string, averageWordLength int, elapsed float32) {
+func MetricsCalculation(charInput string, text string, averageWordLength int, elapsed float32) {
+	correct := 0
+
+	fmt.Printf("\033[32m%s\033[0m\n", text)
+	for i := 0; i < len(charInput); i++ {
+		if charInput[i] == text[i] {
+			fmt.Printf("\033[32m%c\033[0m", charInput[i])
+			correct++
+		} else {
+			fmt.Printf("\033[31m%c\033[0m", charInput[i])
+		}
+	}
+	fmt.Println()
+
 	wpm := int((float32(len(text)) / float32(averageWordLength)) / float32(elapsed))
-	fmt.Println("WPM:", wpm)
-	/*
-		acc :=
-		fmt.Println("ACC:", acc)
-		raw :=
-		fmt.Println("Raw:", raw)
-	*/
+	fmt.Printf("\033[33mWPM: %d\033[0m\n", wpm)
+
+	acc := int((float32(correct) / float32(len(charInput))) * 100)
+	fmt.Printf("\033[33mACC: %d\033[0m\n", acc)
+
+	raw := len(charInput)
+	fmt.Printf("\033[33mRaw: %d\033[0m\n", raw)
+
 }
 
 func clear() {
@@ -81,14 +95,9 @@ func main() {
 	start := time.Now()
 
 	charInput := ""
-	fmt.Scanf("%s", charInput)
-	// if text[0] == charInput[0] {
-	// 	clear()
-	// }
+	fmt.Scanf("%s", &charInput)
 
 	elapsed := time.Since(start).Minutes()
 	clear()
-
-	MetricsCalculation(text, averageWordLength, float32(elapsed))
-
+	MetricsCalculation(charInput, text, averageWordLength, float32(elapsed))
 }
