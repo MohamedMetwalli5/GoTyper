@@ -8,10 +8,10 @@
 
 * Formula: `WPM = (Total characters typed / 5) / Time taken in minutes`
 
-## ACC
+### ACC
 * ACC (Accuracy): It is used to measure the percentage of correctly typed characters. The calculation is based on the total number of correctly typed characters divided by the total number of characters typed, and then multiplied by 100.
 * Formula: `Accuracy = (Correctly typed characters / Total characters typed) x 100`
 
-## RAW
+### RAW
 * RAW (Raw Speed): It is used to measure the total number of characters typed, regardless of accuracy, within a specific time frame. The calculation is based on the total number of characters typed divided by the time taken.
 * Formula: `RAW = Total characters typed / Time taken in seconds`
