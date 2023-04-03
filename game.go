@@ -93,7 +93,7 @@ func main() {
 	println()
 	text := readFile("Words.txt") // text to have the test on
 	fmt.Print(text)
-	fmt.Println("\033[0;5H") // Set cursor position to row 0, column 5 (6th character)
+	fmt.Println("\033[0;5H")
 
 	start := time.Now()
 
