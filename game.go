@@ -56,6 +56,17 @@ func readFile(fileName string) string {
 	return finalText
 }
 
+func MetricsCalculation(text string, averageWordLength int, elapsed float32) {
+	wpm := int((float32(len(text)) / float32(averageWordLength)) / float32(elapsed))
+	fmt.Println("WPM:", wpm)
+	/*
+		acc :=
+		fmt.Println("ACC:", acc)
+		raw :=
+		fmt.Println("Raw:", raw)
+	*/
+}
+
 func clear() {
 	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
@@ -78,7 +89,6 @@ func main() {
 	elapsed := time.Since(start).Minutes()
 	clear()
 
-	wpm := int((float32(len(text)) / averageWordLength) / float32(elapsed))
-	fmt.Printf("WPM: %d", wpm)
+	MetricsCalculation(text, averageWordLength, float32(elapsed))
 
 }
