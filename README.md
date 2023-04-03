@@ -16,5 +16,8 @@
 * RAW (Raw Speed): It is used to measure the total number of characters typed, regardless of accuracy, within a specific time frame. The calculation is based on the total number of characters typed divided by the time taken.
 * Formula: `RAW = Total characters typed / Time taken in seconds`
 
+## Dataset
+It contains 1000 of the most commonly used English words.
+
 ## The Logo
 ![GoTyper](https://user-images.githubusercontent.com/58489322/229482931-17debad2-c555-4202-988b-ee6f0d423507.png)
