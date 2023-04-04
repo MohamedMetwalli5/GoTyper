@@ -57,14 +57,14 @@ func readFile(fileName string) string {
 	return finalText
 }
 
-func MetricsCalculation(charInput string, text string, averageWordLength int, elapsed float32) {
+func MetricsCalculation(input string, text string, averageWordLength int, elapsed float32) {
 	correct := 0
 
 	fmt.Printf("\033[34m▀ \033[0m")
 	fmt.Printf("\033[32m%s\033[0m\n\n", text)
 	fmt.Printf("\033[34m▀ \033[0m")
 	for i := 0; i < len(text); i++ {
-		if i < len(charInput) && charInput[i] == text[i] {
+		if i < len(input) && input[i] == text[i] {
 			fmt.Printf("\033[32m%c\033[0m", text[i])
 			correct++
 		} else {
@@ -79,10 +79,10 @@ func MetricsCalculation(charInput string, text string, averageWordLength int, el
 	wpm := int((float32(len(text)) / float32(averageWordLength)) / float32(elapsed))
 	fmt.Printf("\033[33mWPM: %d\033[0m\n", wpm)
 
-	acc := int((float32(correct) / float32(len(charInput))) * 100)
+	acc := int((float32(correct) / float32(len(input))) * 100)
 	fmt.Printf("\033[33mACC: %d\033[0m\n", acc)
 
-	raw := int(float32(len(charInput)) / float32(elapsed*60))
+	raw := int(float32(len(input)) / float32(elapsed*60))
 	fmt.Printf("\033[33mRaw: %d\033[0m\n", raw)
 
 }
@@ -119,13 +119,13 @@ func main() {
 
 	start := time.Now()
 
-	charInput := ""
+	input := ""
 	scanner := bufio.NewScanner(os.Stdin)
 	if scanner.Scan() {
-		charInput = scanner.Text()
+		input = scanner.Text()
 	}
 
 	elapsed := time.Since(start).Minutes()
 	clear()
-	MetricsCalculation(charInput, text, averageWordLength, float32(elapsed))
+	MetricsCalculation(input, text, averageWordLength, float32(elapsed))
 }
