@@ -29,7 +29,7 @@ func getRandomElements(dictionary []string, textLength int) string {
 			finalText += dictionary[index] + theSpaceDelimiter
 		}
 	}
-	finalText = strings.TrimRight(finalText, " ")
+	finalText = strings.TrimRight(finalText, theSpaceDelimiter)
 	return finalText
 }
 
@@ -113,7 +113,7 @@ func main() {
 	clear()
 	println()
 
-	text := readFile("Words.txt") // text to have the test on
+	text := readFile("Dataset.txt") // text to have the test on
 	fmt.Print(text)
 	fmt.Println("\033[0;5H")
 
