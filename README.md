@@ -27,7 +27,7 @@
 * Formula: `RAW = Total characters typed / Time taken in seconds`
 
 ## Dataset
-It contains 1000 of the most commonly used English words.
+It contains 1000 of the most commonly used English words, as well as numbers and special characters.
 
 ## The Logo
 ![GoTyper](https://user-images.githubusercontent.com/58489322/229482931-17debad2-c555-4202-988b-ee6f0d423507.png)
