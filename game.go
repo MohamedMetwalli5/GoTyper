@@ -11,7 +11,7 @@ import (
 )
 
 const averageWordLength = 5
-const theSpaceSelimiter = "."
+const theSpaceSelimiter = " "
 
 func randomNumberGenerator() int {
 	rand.Seed(time.Now().UnixNano())
@@ -60,7 +60,9 @@ func readFile(fileName string) string {
 func MetricsCalculation(charInput string, text string, averageWordLength int, elapsed float32) {
 	correct := 0
 
+	fmt.Printf("\033[34m▀ \033[0m")
 	fmt.Printf("\033[32m%s\033[0m\n\n", text)
+	fmt.Printf("\033[34m▀ \033[0m")
 	for i := 0; i < len(charInput); i++ {
 		if charInput[i] == text[i] {
 			fmt.Printf("\033[32m%c\033[0m", charInput[i])
@@ -69,7 +71,7 @@ func MetricsCalculation(charInput string, text string, averageWordLength int, el
 			fmt.Printf("\033[31m%c\033[0m", charInput[i])
 		}
 	}
-	fmt.Println("\n-------------------------------------------------------------------------------------------")
+	fmt.Print("\n-------------------------------------------------------------------------------------------\n\n")
 
 	fmt.Println("\033[32m▀ Right\033[0m")
 	fmt.Println("\033[31m▀ Wrong\033[0m")
@@ -118,7 +120,10 @@ func main() {
 	start := time.Now()
 
 	charInput := ""
-	fmt.Scanf("%s", &charInput)
+	scanner := bufio.NewScanner(os.Stdin)
+	if scanner.Scan() {
+		charInput = scanner.Text()
+	}
 
 	elapsed := time.Since(start).Minutes()
 	clear()
