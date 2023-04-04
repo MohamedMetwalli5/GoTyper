@@ -63,12 +63,12 @@ func MetricsCalculation(charInput string, text string, averageWordLength int, el
 	fmt.Printf("\033[34m▀ \033[0m")
 	fmt.Printf("\033[32m%s\033[0m\n\n", text)
 	fmt.Printf("\033[34m▀ \033[0m")
-	for i := 0; i < len(charInput); i++ {
-		if charInput[i] == text[i] {
-			fmt.Printf("\033[32m%c\033[0m", charInput[i])
+	for i := 0; i < len(text); i++ {
+		if i < len(charInput) && charInput[i] == text[i] {
+			fmt.Printf("\033[32m%c\033[0m", text[i])
 			correct++
 		} else {
-			fmt.Printf("\033[31m%c\033[0m", charInput[i])
+			fmt.Printf("\033[31m%c\033[0m", text[i])
 		}
 	}
 	fmt.Print("\n-------------------------------------------------------------------------------------------\n\n")
