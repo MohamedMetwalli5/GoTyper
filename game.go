@@ -13,9 +13,20 @@ import (
 const averageWordLength = 5
 const theSpaceDelimiter = " "
 
-func randomNumberGenerator() int {
+func randomNumberGenerator(level string) int {
+	minTextRange, maxTextRange := 10, 81 //default values
+	if level == "Easy" {
+		minTextRange = 10
+		maxTextRange = 41
+	} else if level == "Medium" {
+		minTextRange = 30
+		maxTextRange = 61
+	} else {
+		minTextRange = 50
+		maxTextRange = 81
+	}
 	rand.Seed(time.Now().UnixNano())
-	textLength := rand.Intn(81) + 10 // Generate a random integer between 10 and 90
+	textLength := rand.Intn(maxTextRange) + minTextRange // Generate a random integer in the specified range
 	return textLength
 }
 
@@ -33,7 +44,7 @@ func getRandomElements(dictionary []string, textLength int) string {
 	return finalText
 }
 
-func readFile(fileName string) string {
+func readFile(level string, fileName string) string {
 	var dictionary []string
 	file, err := os.Open(fileName)
 	if err != nil {
@@ -52,9 +63,19 @@ func readFile(fileName string) string {
 		fmt.Println("Error reading file:", err)
 	}
 
-	textLength := randomNumberGenerator()
+	textLength := randomNumberGenerator(level)
 	finalText := getRandomElements(dictionary, textLength)
 	return finalText
+}
+
+func levelSelector(levelChoice string) string {
+	if levelChoice == "1" {
+		return "Easy"
+	} else if levelChoice == "2" {
+		return "Medium"
+	} else {
+		return "Hard"
+	}
 }
 
 func MetricsCalculation(input string, text string, averageWordLength int, elapsed float32) {
@@ -76,13 +97,16 @@ func MetricsCalculation(input string, text string, averageWordLength int, elapse
 	fmt.Println("\033[32m▀ Right\033[0m")
 	fmt.Println("\033[31m▀ Wrong\033[0m")
 
-	wpm := int((float32(len(text)) / float32(averageWordLength)) / float32(elapsed))
+	wpm := int((float32(len(input)) / float32(averageWordLength)) / float32(elapsed))
 	fmt.Printf("\033[33mWPM: %d\033[0m\n", wpm)
 
 	acc := int((float32(correct) / float32(len(input))) * 100)
+	if acc < 0 {
+		acc = 0
+	}
 	fmt.Printf("\033[33mACC: %d\033[0m\n", acc)
 
-	raw := int(float32(len(input)) / float32(elapsed*60))
+	raw := int(float32(len(input)) / (float32(elapsed * 60)))
 	fmt.Printf("\033[33mRaw: %d\033[0m\n", raw)
 
 }
@@ -113,14 +137,24 @@ func main() {
 	clear()
 	println()
 
-	text := readFile("Dataset.txt") // text to have the test on
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Println("Choose a level : \n(1) Easy\n(2) Medium\n(3) Hard")
+	level := ""
+	if scanner.Scan() {
+		level = scanner.Text()
+		level = levelSelector(level)
+	}
+	clear()
+	println()
+
+	text := readFile(level, "Dataset.txt") // text to have the test on
 	fmt.Print(text)
 	fmt.Println("\033[0;5H")
 
 	start := time.Now()
 
 	input := ""
-	scanner := bufio.NewScanner(os.Stdin)
 	if scanner.Scan() {
 		input = scanner.Text()
 	}
