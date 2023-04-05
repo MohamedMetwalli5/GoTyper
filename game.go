@@ -17,12 +17,12 @@ func randomNumberGenerator(level string) int {
 	minTextRange, maxTextRange := 10, 81 //default values
 	if level == "Easy" {
 		minTextRange = 10
-		maxTextRange = 41
+		maxTextRange = 31
 	} else if level == "Medium" {
-		minTextRange = 30
+		minTextRange = 32
 		maxTextRange = 61
 	} else {
-		minTextRange = 50
+		minTextRange = 62
 		maxTextRange = 81
 	}
 	rand.Seed(time.Now().UnixNano())
