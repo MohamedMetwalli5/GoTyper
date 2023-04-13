@@ -2,12 +2,24 @@ package main
 
 import (
 	"bufio"
+	"database/sql"
 	"fmt"
 	"math/rand"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 	"time"
+
+	_ "github.com/lib/pq"
+)
+
+const (
+	host           = "localhost"
+	port           = 5432
+	user           = "postgres"
+	admin_password = "1234"
+	dbname         = "GoTyper-DB"
 )
 
 const averageWordLength = 5
@@ -78,7 +90,7 @@ func levelSelector(levelChoice string) string {
 	}
 }
 
-func MetricsCalculation(input string, text string, averageWordLength int, elapsed float32) {
+func MetricsCalculation(username string, password string, input string, text string, averageWordLength int, elapsed float32) {
 	correct := 0
 
 	fmt.Printf("\033[34m▀ \033[0m")
@@ -109,12 +121,30 @@ func MetricsCalculation(input string, text string, averageWordLength int, elapse
 	raw := int(float32(len(input)) / (float32(elapsed * 60)))
 	fmt.Printf("\033[33mRaw: %d\033[0m\n", raw)
 
+	insertInDataBase(username, password, strconv.Itoa(wpm), strconv.Itoa(acc), strconv.Itoa(raw))
 }
 
 func clear() {
 	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
 	cmd.Run()
+}
+
+func CheckError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+func insertInDataBase(username string, password string, wpm string, acc string, raw string) {
+	psqlconn := fmt.Sprintf("host= %s port= %d user= %s password= %s dbname= %s sslmode=disable", host, port, user, admin_password, dbname)
+	db, err := sql.Open("postgres", psqlconn)
+	CheckError(err)
+	defer db.Close()
+
+	insertDynamicStmt := `insert into "users" ("username", "password", "wpm", "acc", "raw") values ($1, $2, $3, $4, $5)`
+	_, e := db.Exec(insertDynamicStmt, username, password, wpm, acc, raw)
+	CheckError(e)
 }
 
 func main() {
@@ -137,6 +167,16 @@ func main() {
 	clear()
 	println()
 
+	fmt.Print("Enter Username : ")
+	username := ""
+	fmt.Scanln(&username)
+
+	fmt.Print("Enter Password : ")
+	password := ""
+	fmt.Scanln(&password)
+
+	clear()
+	println()
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Choose a level : \n(1) Easy\n(2) Medium\n(3) Hard")
@@ -161,5 +201,5 @@ func main() {
 
 	elapsed := time.Since(start).Minutes()
 	clear()
-	MetricsCalculation(input, text, averageWordLength, float32(elapsed))
+	MetricsCalculation(username, password, input, text, averageWordLength, float32(elapsed))
 }
