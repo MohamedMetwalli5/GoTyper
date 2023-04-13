@@ -1,4 +1,5 @@
 ![Language](https://img.shields.io/badge/language-Go%20-cyan.svg)
+![DBMS](https://img.shields.io/badge/DBMS-PostgreSQL%20-blue.svg)
 ![License](https://img.shields.io/badge/license-Apache_2.0-orange.svg)
 
 				    ▄████  ▒█████  ▄▄▄█████▓▓██   ██▓ ██▓███  ▓█████  ██▀███  
