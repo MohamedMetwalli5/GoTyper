@@ -12,6 +12,8 @@
 				  ░ ░   ░ ░ ░ ░ ▒    ░       ▒ ▒ ░░  ░░          ░     ░░   ░ 
 					░     ░ ░            ░ ░                 ░  ░   ░     
 							     ░ ░                              
+## Run
+`go run game.go database_operations.g`
 
 ## Metrics Calculations
 ### WPM
