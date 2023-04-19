@@ -16,6 +16,7 @@ import (
 
 const averageWordLength = 5
 const theSpaceDelimiter = " "
+const accessStringConcatentaionValue = "`y8q@4weyt^"
 
 func randomNumberGenerator(level string) int {
 	minTextRange, maxTextRange := 10, 81 //default values
@@ -182,7 +183,7 @@ func CommandLineOptionsSetter(options []string, usage string) string {
 			}
 			time.Sleep(1 * time.Second)
 		}
-		return username + "`" + password
+		return username + accessStringConcatentaionValue + password
 	}
 
 	return ""
@@ -233,8 +234,8 @@ func main() {
 
 	accessOptions := []string{"SignUp", "Login"}
 	accessValues := CommandLineOptionsSetter(accessOptions, "Access")
-	username = strings.Split(accessValues, "`")[0]
-	password = strings.Split(accessValues, "`")[1]
+	username = strings.Split(accessValues, accessStringConcatentaionValue)[0]
+	password = strings.Split(accessValues, accessStringConcatentaionValue)[1]
 	clear()
 	println()
 
