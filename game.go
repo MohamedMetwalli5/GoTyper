@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/eiannone/keyboard"
 	_ "github.com/lib/pq"
 )
 
@@ -71,10 +72,10 @@ func readFile(level string, fileName string) string {
 	return finalText
 }
 
-func levelSelector(levelChoice string) string {
-	if levelChoice == "1" {
+func levelSelector(levelChoice int) string {
+	if levelChoice == 0 {
 		return "Easy"
-	} else if levelChoice == "2" {
+	} else if levelChoice == 1 {
 		return "Medium"
 	} else {
 		return "Hard"
@@ -115,6 +116,90 @@ func MetricsCalculation(username string, password string, input string, text str
 	updateDataBase(username, password, strconv.Itoa(wpm), strconv.Itoa(acc), strconv.Itoa(raw))
 }
 
+func CommandLineOptionsSetter(options []string, usage string) string {
+	selectedIndex := 0
+
+	selectOptions(options, selectedIndex) // Print the initial options
+
+	// Listen for arrow key inputs
+	err := keyboard.Open()
+	if err != nil {
+		panic(err)
+	}
+	defer func() {
+		_ = keyboard.Close()
+	}()
+
+	for {
+		_, key, err := keyboard.GetKey()
+		if err != nil {
+			panic(err)
+		}
+
+		if key == keyboard.KeyArrowUp {
+			selectedIndex--
+			if selectedIndex < 0 {
+				selectedIndex = len(options) - 1
+			}
+			selectOptions(options, selectedIndex)
+		} else if key == keyboard.KeyArrowDown {
+			selectedIndex++
+			if selectedIndex >= len(options) {
+				selectedIndex = 0
+			}
+			selectOptions(options, selectedIndex)
+		} else if key == keyboard.KeyEnter {
+			// User has made a selection, exit loop
+			break
+		} else {
+			fmt.Println("Invalid key")
+		}
+	}
+	clear()
+
+	if usage == "Level" {
+		return levelSelector(selectedIndex)
+	} else if usage == "Access" {
+		username := ""
+		password := ""
+		if selectedIndex == 0 {
+			fmt.Print("Enter Username : ")
+			fmt.Scanln(&username)
+
+			fmt.Print("Enter Password : ")
+			fmt.Scanln(&password)
+			SignUp(username, password)
+		} else {
+			loginFlag := false
+			for !loginFlag {
+				fmt.Print("Enter Username : ")
+				fmt.Scanln(&username)
+
+				fmt.Print("Enter Password : ")
+				fmt.Scanln(&password)
+
+				loginFlag = Login(username, password)
+			}
+			time.Sleep(1 * time.Second)
+		}
+		return username + "`" + password
+	}
+
+	return ""
+}
+
+func selectOptions(options []string, selectedIndex int) {
+	fmt.Print("\033[H\033[2J") // Clear the console before printing the options
+
+	for i, option := range options {
+		if i == selectedIndex {
+			fmt.Printf("\033[1m\033[7m> %s\033[0m\n", option) // Use ANSI escape codes to set the selected option to a different color
+		} else {
+			fmt.Printf("  %s\n", option)
+		}
+	}
+}
+
 func clear() {
 	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
@@ -146,40 +231,15 @@ func main() {
 
 	scanner := bufio.NewScanner(os.Stdin)
 
-	fmt.Println("(1) SignUp\n(2) Login")
-	passingOption := ""
-	if scanner.Scan() {
-		passingOption = scanner.Text()
-		if passingOption == "1" {
-			fmt.Print("Enter Username : ")
-			fmt.Scanln(&username)
-
-			fmt.Print("Enter Password : ")
-			fmt.Scanln(&password)
-			SignUp(username, password)
-		} else {
-			loginFlag := false
-			for !loginFlag {
-				fmt.Print("Enter Username : ")
-				fmt.Scanln(&username)
-
-				fmt.Print("Enter Password : ")
-				fmt.Scanln(&password)
-
-				loginFlag = Login(username, password)
-			}
-			time.Sleep(1 * time.Second)
-		}
-	}
+	accessOptions := []string{"SignUp", "Login"}
+	accessValues := CommandLineOptionsSetter(accessOptions, "Access")
+	username = strings.Split(accessValues, "`")[0]
+	password = strings.Split(accessValues, "`")[1]
 	clear()
 	println()
 
-	fmt.Println("Choose a level : \n(1) Easy\n(2) Medium\n(3) Hard")
-	level := ""
-	if scanner.Scan() {
-		level = scanner.Text()
-		level = levelSelector(level)
-	}
+	levelOptions := []string{"Easy", "Medium", "Hard"}
+	level := CommandLineOptionsSetter(levelOptions, "Level")
 	clear()
 	println()
 
