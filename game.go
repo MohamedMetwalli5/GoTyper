@@ -12,6 +12,7 @@ import (
 
 	"github.com/eiannone/keyboard"
 	_ "github.com/lib/pq"
+	"github.com/micmonay/keybd_event"
 )
 
 const averageWordLength = 5
@@ -159,6 +160,7 @@ func CommandLineOptionsSetter(options []string, usage string) string {
 	clear()
 
 	if usage == "Level" {
+		keyStrokeHelper("Level")
 		return levelSelector(selectedIndex)
 	} else if usage == "Access" {
 		username := ""
@@ -182,6 +184,7 @@ func CommandLineOptionsSetter(options []string, usage string) string {
 				loginFlag = Login(username, password)
 			}
 			time.Sleep(1 * time.Second)
+			keyStrokeHelper("Access")
 		}
 		return username + accessStringConcatentaionValue + password
 	}
@@ -197,6 +200,34 @@ func selectOptions(options []string, selectedIndex int) {
 			fmt.Printf("\033[1m\033[7m> %s\033[0m\n", option) // Use ANSI escape codes to set the selected option to a different color
 		} else {
 			fmt.Printf("  %s\n", option)
+		}
+	}
+}
+
+func keyStrokeHelper(usage string) {
+	if usage == "Level" {
+		kb, err := keybd_event.NewKeyBonding()
+		if err != nil {
+			panic(err)
+		}
+		kb.SetKeys(keybd_event.VK_LEFT)
+
+		// Press the selected keys
+		err = kb.Launching()
+		if err != nil {
+			panic(err)
+		}
+	} else if usage == "Access" {
+		kb, err := keybd_event.NewKeyBonding()
+		if err != nil {
+			panic(err)
+		}
+		kb.SetKeys(keybd_event.VK_DOWN)
+
+		// Press the selected keys
+		err = kb.Launching()
+		if err != nil {
+			panic(err)
 		}
 	}
 }

@@ -7,4 +7,7 @@ require (
 	github.com/lib/pq v1.10.7
 )
 
-require golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
+require (
+	github.com/micmonay/keybd_event v1.1.1
+	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
+)
