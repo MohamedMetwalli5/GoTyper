@@ -16,6 +16,9 @@
 ## Run
 	go run game.go database_operations.g
 
+## About
+This is a terminal-based typing game that can be played solo or with a friend on the same local network. It utilizes socket programming for multiplayer functionality.
+
 ## Metrics Calculations
 ### WPM
 * WPM (Words Per Minute): It is used to measure how many words a typist can accurately type within a minute. The calculation is based on the total number of characters typed divided by 5 (since an average word is considered to be 5 characters long like in the dataset i used) and then divided by the time taken in minutes.
