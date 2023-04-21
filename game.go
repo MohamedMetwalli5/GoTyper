@@ -187,6 +187,14 @@ func CommandLineOptionsSetter(options []string, usage string) string {
 			keyStrokeHelper("Access")
 		}
 		return username + accessStringConcatentaionValue + password
+	} else if usage == "Players" {
+		keyStrokeHelper("Players")
+		if selectedIndex == 0 {
+			return "1Player"
+		} else {
+
+			return "2Players"
+		}
 	}
 
 	return ""
@@ -218,6 +226,18 @@ func keyStrokeHelper(usage string) {
 			panic(err)
 		}
 	} else if usage == "Access" {
+		kb, err := keybd_event.NewKeyBonding()
+		if err != nil {
+			panic(err)
+		}
+		kb.SetKeys(keybd_event.VK_DOWN)
+
+		// Press the selected keys
+		err = kb.Launching()
+		if err != nil {
+			panic(err)
+		}
+	} else if usage == "Players" {
 		kb, err := keybd_event.NewKeyBonding()
 		if err != nil {
 			panic(err)
@@ -270,12 +290,35 @@ func main() {
 	clear()
 	println()
 
+	playingOptions := []string{"1 player", "2 players"}
+	playersValues := CommandLineOptionsSetter(playingOptions, "Players")
+	clear()
+	println()
+
 	levelOptions := []string{"Easy", "Medium", "Hard"}
 	level := CommandLineOptionsSetter(levelOptions, "Level")
 	clear()
 	println()
 
 	text := readFile(level, "Dataset.txt") // text to have the test on
+	if playersValues == "2Players" {
+		port := ""
+		fmt.Print("Enter Port: ")
+		fmt.Scanln(&port)
+
+		sender := ""
+		fmt.Print("Sender? y/n :  ")
+		fmt.Scanln(&sender)
+		if sender == "y" {
+			SendDataToServer(text, port)
+		} else if sender == "n" {
+			startTCPServer(port) // TODO: The server part of the program
+		} else {
+			fmt.Print("Enter only 'y' or 'n'")
+		}
+		clear()
+		println()
+	}
 	fmt.Print(text)
 	fmt.Println("\033[0;5H")
 
