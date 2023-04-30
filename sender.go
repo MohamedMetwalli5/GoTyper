@@ -8,8 +8,9 @@ import (
 // the first client send the data to the second client using this
 // the port value must be the same as for the receiver and i suggest both to be 3035
 func SendDataToServer(data string, port string) {
+	// senderIPAddress := GetLocalIPAddresses()
 	// Establish a connection to the server
-	conn, err := net.Dial("tcp", "192.168.1.2:"+port) // TODO: making the IP address a dynamic value
+	conn, err := net.Dial("tcp", GetLocalIPAddresses()[1]+":"+port)
 	if err != nil {
 		// Handle error
 		fmt.Println("Error:", err)
