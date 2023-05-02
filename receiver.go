@@ -6,10 +6,10 @@ import (
 	"os"
 )
 
-// var message = ""
+var message = ""
 
 // i suggest port to have the value of 3035
-func startTCPServer(port string) {
+func startTCPServer(port string) string {
 	listener, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		fmt.Println("Error listening:", err.Error())
@@ -33,12 +33,9 @@ func startTCPServer(port string) {
 	}
 
 	// Save message to a string variable
-	receivedMessage := string(buf[:n])
-
-	fmt.Printf("Received message: %v\n", receivedMessage)
+	message = string(buf[:n])
 
 	// Close the connection
 	conn.Close()
-
-	fmt.Println("Server has ended")
+	return message
 }

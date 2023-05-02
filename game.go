@@ -310,9 +310,13 @@ func main() {
 		fmt.Print("Sender? y/n :  ")
 		fmt.Scanln(&sender)
 		if sender == "y" {
-			SendDataToServer(text, port)
+			serverIPAddress := ""
+			fmt.Print("Enter Other Player's IP Address (example: http://192.168.1.4) : ")
+			fmt.Scanln(&serverIPAddress)
+
+			SendDataToServer(text, serverIPAddress, port)
 		} else if sender == "n" {
-			startTCPServer(port) // TODO: The server part of the program
+			text = startTCPServer(port)
 		} else {
 			fmt.Print("Enter only 'y' or 'n'")
 		}
