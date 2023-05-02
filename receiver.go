@@ -3,50 +3,42 @@ package main
 import (
 	"fmt"
 	"net"
+	"os"
 )
 
-var message = ""
-
-func handleConnection(conn net.Conn) {
-	defer conn.Close()
-	fmt.Println("New connection established.")
-
-	// Read incoming data from the client
-	buf := make([]byte, 1024)
-	_, err := conn.Read(buf)
-	if err != nil {
-		// Handle error
-		fmt.Println("Error:", err)
-		return
-	}
-	message = string(buf)
-	fmt.Println("Received message:", message)
-
-	// Check if the message equals a specified string
-	if len(message) > 0 {
-		conn.Close() // Close the connection to the client
-		return
-	}
-}
+// var message = ""
 
 // i suggest port to have the value of 3035
 func startTCPServer(port string) {
-	fmt.Println("Starting server...")
-	ln, err := net.Listen("tcp", ":"+port)
+	listener, err := net.Listen("tcp", ":"+port)
 	if err != nil {
-		// Handle error
-		fmt.Println("Error:", err)
-		return
+		fmt.Println("Error listening:", err.Error())
+		os.Exit(1)
 	}
-	defer ln.Close()
+	defer listener.Close()
 
-	for {
-		conn, err := ln.Accept()
-		if err != nil {
-			// Handle error
-			fmt.Println("Error:", err)
-			continue
-		}
-		go handleConnection(conn)
+	// Wait for a connection
+	conn, err := listener.Accept()
+	if err != nil {
+		fmt.Println("Error accepting:", err.Error())
+		os.Exit(1)
 	}
+
+	// Read message from client
+	buf := make([]byte, 1024)
+	n, err := conn.Read(buf)
+	if err != nil {
+		fmt.Println("Error reading:", err.Error())
+		os.Exit(1)
+	}
+
+	// Save message to a string variable
+	receivedMessage := string(buf[:n])
+
+	fmt.Printf("Received message: %v\n", receivedMessage)
+
+	// Close the connection
+	conn.Close()
+
+	fmt.Println("Server has ended")
 }

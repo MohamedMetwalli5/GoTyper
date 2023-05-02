@@ -17,7 +17,7 @@ import (
 
 const averageWordLength = 5
 const theSpaceDelimiter = " "
-const accessStringConcatentaionValue = "`y8q@4weyt^"
+const accessStringConcatentaionValue = "`y8q@4weygaskldn0t^"
 
 func randomNumberGenerator(level string) int {
 	minTextRange, maxTextRange := 10, 81 //default values
