@@ -14,7 +14,7 @@
 							     ░ ░                              
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 ## Run
-	go run game.go database_operations.go network_utilities.go sender.go receiver.go
+	go run game.go database_operations.go sender.go receiver.go
 
 ## About
 This is a terminal-based typing game that can be played solo or with a friend on the same local network. It utilizes socket programming for multiplayer functionality.
