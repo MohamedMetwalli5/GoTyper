@@ -7,6 +7,8 @@ require (
 	github.com/lib/pq v1.10.7
 )
 
+require github.com/joho/godotenv v1.5.1 // indirect
+
 require (
 	github.com/micmonay/keybd_event v1.1.2
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect

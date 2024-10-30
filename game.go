@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/eiannone/keyboard"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/micmonay/keybd_event"
 )
@@ -165,8 +166,8 @@ func CommandLineOptionsSetter(options []string, usage string) string {
 	} else if usage == "Access" {
 		username := ""
 		password := ""
-		
-		keyboard.Close() /// 
+
+		keyboard.Close() ///
 		if selectedIndex == 0 {
 			fmt.Print("Enter Username : ")
 			fmt.Scanln(&username)
@@ -263,7 +264,9 @@ func clear() {
 }
 
 func main() {
-	createDatabase() // If it doesn't exist
+	godotenv.Load()
+	InitiateDataBaseVariables()
+	createDatabase()   // If it doesn't exist
 	createUsersTable() // If it doesn't exist
 
 	clear()

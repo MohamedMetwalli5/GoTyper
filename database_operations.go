@@ -3,19 +3,29 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"os"
+	"strconv"
 
 	_ "github.com/lib/pq"
 )
 
-const (
-	host           = "localhost"
-	port           = 5432
-	user           = "postgres"
-	admin_password = "1234"
-	dbname         = "GoTyper-DB"
+// "docker run --name my-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=1234 -p 5432:5432 -d postgres"
+
+var (
+	host           string
+	port           int
+	user           string
+	admin_password string
+	dbname         string
 )
 
-// "docker run --name my-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=1234 -p 5432:5432 -d postgres"
+func InitiateDataBaseVariables() {
+	host = os.Getenv("host")
+	port, _ = strconv.Atoi(os.Getenv("port"))
+	user = os.Getenv("user")
+	admin_password = os.Getenv("admin_password")
+	dbname = os.Getenv("dbname")
+}
 
 func CheckError(err error) {
 	if err != nil {
