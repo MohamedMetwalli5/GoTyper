@@ -1,33 +1,14 @@
-# The official Go image
-FROM golang:1.20 AS builder
+# The Go base image
+FROM golang:1.18-alpine
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the go.mod and go.sum files
-COPY go.mod .
-COPY go.sum .
+# Copy the source code
+COPY . .
 
 # Download dependencies
 RUN go mod download
 
-# Copy the source code
-COPY . .
-
-# Build the Go application
-RUN go build -o go_typer .
-
-# Use a lightweight image to run the application
-FROM alpine:latest
-
-# Set the working directory
-WORKDIR /app/
-
-# Copy the binary from the builder stage
-COPY --from=builder /app/go_typer .
-
-# Give permission
-RUN chmod +x go_typer
-
-# Command to run the application
-CMD ["./go_typer"]
+# Run the application using multiple Go files
+CMD ["go", "run", "game.go", "database_operations.go", "sender.go", "receiver.go"]
