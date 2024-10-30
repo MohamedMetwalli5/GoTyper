@@ -10,5 +10,8 @@ COPY . .
 # Download dependencies
 RUN go mod download
 
-# Run the application using multiple Go files
-CMD ["go", "run", "game.go", "database_operations.go", "sender.go", "receiver.go"]
+# Build the Go application with all files
+RUN go build -o main game.go database_operations.go sender.go receiver.go
+
+# Run the compiled binary
+CMD ["./main"]
