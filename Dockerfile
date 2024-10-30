@@ -21,10 +21,13 @@ RUN go build -o go_typer .
 FROM alpine:latest
 
 # Set the working directory
-WORKDIR /root/
+WORKDIR /app/
 
 # Copy the binary from the builder stage
 COPY --from=builder /app/go_typer .
+
+# Give permission
+RUN chmod +x go_typer
 
 # Command to run the application
 CMD ["./go_typer"]
