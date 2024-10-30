@@ -8,6 +8,6 @@ require (
 )
 
 require (
-	github.com/micmonay/keybd_event v1.1.1
+	github.com/micmonay/keybd_event v1.1.2
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 )

@@ -165,6 +165,8 @@ func CommandLineOptionsSetter(options []string, usage string) string {
 	} else if usage == "Access" {
 		username := ""
 		password := ""
+		
+		keyboard.Close() /// 
 		if selectedIndex == 0 {
 			fmt.Print("Enter Username : ")
 			fmt.Scanln(&username)
@@ -186,6 +188,8 @@ func CommandLineOptionsSetter(options []string, usage string) string {
 			time.Sleep(1 * time.Second)
 			keyStrokeHelper("Access")
 		}
+		keyboard.Open() ///
+
 		return username + accessStringConcatentaionValue + password
 	} else if usage == "Players" {
 		keyStrokeHelper("Players")
@@ -259,6 +263,9 @@ func clear() {
 }
 
 func main() {
+	createDatabase() // If it doesn't exist
+	createUsersTable() // If it doesn't exist
+
 	clear()
 	println()
 

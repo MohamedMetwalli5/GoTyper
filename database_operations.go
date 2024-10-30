@@ -15,10 +15,42 @@ const (
 	dbname         = "GoTyper-DB"
 )
 
+// "docker run --name my-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=1234 -p 5432:5432 -d postgres"
+
 func CheckError(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func createDatabase() {
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s sslmode=disable", host, port, user, admin_password)
+	db, err := sql.Open("postgres", psqlconn)
+	CheckError(err)
+	defer db.Close()
+
+	// Attempt to create the database
+	_, err = db.Exec(fmt.Sprintf("CREATE DATABASE \"%s\"", dbname))
+}
+
+func createUsersTable() {
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, admin_password, dbname)
+	db, err := sql.Open("postgres", psqlconn)
+	CheckError(err)
+	defer db.Close()
+
+	// Create the users table if it doesn't exist
+	createTableSQL := `
+	CREATE TABLE IF NOT EXISTS public.users (
+		username character varying(255) NOT NULL,
+		password character varying(255),
+		wpm integer DEFAULT 0,
+		acc integer DEFAULT 0,
+		"raw" integer DEFAULT 0,
+		CONSTRAINT users_pkey PRIMARY KEY (username)
+	);`
+	_, err = db.Exec(createTableSQL)
+	CheckError(err)
 }
 
 func updateDataBase(username string, password string, wpm string, acc string, raw string) {
